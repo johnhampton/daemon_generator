@@ -4,10 +4,13 @@ require "daemons"
 require 'yaml'
 require 'erb'
 
-file_name = File.dirname(__FILE__) + "/../../vendor/rails/activesupport/lib/active_support.rb"
+path =  File.dirname(__FILE__) + "/../../vendor/rails/activesupport/lib"
+file_name = path + "/active_support.rb"
 
 if(File.exists?(file_name))
+  $LOAD_PATH.unshift path
   require file_name
+  $LOAD_PATH.shift
 else
 rails_version = File.new(File.dirname(__FILE__)+ "/../../config/environment.rb").read.scan(/^ *RAILS_GEM_VERSION.*=.*['|"](.*)['|"]/)[0].to_s
 
